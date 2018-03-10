@@ -11,21 +11,25 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <ul id='catList'>
-
-          </ul>
+          <ul id='catList'></ul>
+          <button id='adminBtn'>Admin</button>
         </div>
         <div class="col-md-8 cat-view-large">
           <img id="cat-main" src="" height="400" alt="cat">
           <p id="clickCount"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div id="admin" class="col-md-12">
+          <form id= 'adminForm'>
+              <label for="adminCatName">Cat name: </label><input type= 'text' class='adminInput' id='adminCatName'>
+              <label for="admintCatClicks">Clicks: </label><input type= 'text' class='adminCatClicks' id='adminCatClicks'>
+          </form>
+              <button id= 'adminCancel'>Cancel</button>
+              <button id= 'adminSave'>Save</button>
+        </div>
       </div>
     </div>
-
-    </div>
-
-
-    <script src="js/script.js">
-
-    </script>
+    <script src="js/script.js"></script>
   </body>
 </html>

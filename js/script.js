@@ -1,5 +1,6 @@
 var catModel = {
     catDisplay: null,
+    adminDisplay: false,
     cats: [
         {
           name: 'Stormy',
@@ -33,11 +34,12 @@ var Controller = {
 
   init: function(){
     // set Current cat to first one in list
-    catModel.catDisplay = catModel.cats[0];
+    catModel.catDisplay = catModel.cats[0]
 
     // initialize views
     catListView.init()
     catView.init()
+    adminView.init()
   },
 
   getCats: function(){
@@ -55,7 +57,34 @@ var Controller = {
   incrementCounter: function(){
     catModel.catDisplay.clickCount++
     catView.render()
+  },
+
+
+  adminDisplay: function(){
+      if (!catModel.adminDisplay) {
+          catModel.adminDisplay = true
+          adminView.show()
+      }
+      else {
+          catModel.adminDisplay = false
+          adminView.hide()
+      }
+  },
+
+  adminCancel: function(){
+      adminView.hide()
+  },
+
+
+  adminSave: function(){
+      catModel.catDisplay.name= adminCatName.value
+      catModel.catDisplay.clickCount= adminCatClicks.value
+      catView.render()
+      catListView.render()
+      adminView.hide()
   }
+
+
 }
 
 var catListView = {
@@ -72,7 +101,6 @@ var catListView = {
 
     // empty the cat list
     this.catListElem.innerHTML = '';
-
 
     // loop over each cat
     for( var i = 0; i < cats.length; i++){
@@ -116,6 +144,50 @@ var catView = {
     this.catImg.src = cat.imgSrc
     this.catcount.innerHTML = cat.name + ' has beeeen click on '   +    cat.clickCount + ' times'
   }
+}
+
+
+
+var adminView = {
+    init: function(){
+        this.adminCatName = document.getElementById("adminCatName")
+        this.adminCatClicks = document.getElementById("adminCatClicks")
+        var admin = document.getElementById("admin")
+
+        this.adminBtn = document.getElementById("adminBtn")
+        this.adminCancel = document.getElementById("adminCancel")
+        this.adminSave = document.getElementById("adminSave")
+
+        this.adminBtn.addEventListener('click', function(){
+            Controller.adminDisplay()
+        });
+
+        this.adminCancel.addEventListener('click', function(){
+            Controller.adminCancel()
+        });
+
+        this.adminSave.addEventListener('click', function(){
+            Controller.adminSave()
+        });
+
+        this.render()
+    },
+
+    render: function(){
+        var currentCat = Controller.getCurrentCat()
+        this.adminCatName.value = currentCat.name
+        this.adminCatClicks.value = currentCat.clickCount
+        this.hide()
+    },
+
+    show: function(){
+            admin.style.display = 'block'
+        },
+
+    hide: function(){
+        admin.style.display = 'none'
+        console.log('why isn" this working')
+    }
 }
 
 Controller.init();
